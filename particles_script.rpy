@@ -41,12 +41,12 @@
             self.zoom = .0
             self.alpha = .0
             
-    class CustomParticlesV1_2(renpy.Displayable):   
+    class CustomParticles(renpy.Displayable):   
         from random import randint, uniform
         from math import sqrt, pow
         
         def __init__(self, part_img, parts_count=300):
-            super(CustomParticlesV1_2, self).__init__()
+            super(CustomParticles, self).__init__()
             self.part_img = renpy.displayable(part_img)
             
             self.w, self.h = (config.screen_width, config.screen_height)
