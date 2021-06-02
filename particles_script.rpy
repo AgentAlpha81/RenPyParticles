@@ -1,8 +1,4 @@
-﻿init python:
-    import random
-    import math
-    import pygame_sdl2 as pygame
-    
+﻿init python:    
     from renpy.display.transform import polar_to_cartesian
     
     class Vector(renpy.object.Object):
