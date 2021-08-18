@@ -93,8 +93,8 @@
                                   part_time,
                                   rise_time,
                                   fall_time,
-                                  max_alpha,
                                   max_zoom,
+                                  max_alpha,
                                   st)
             return part
             
