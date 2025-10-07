@@ -6,13 +6,11 @@
         # Константы для настройки частиц:
         ALPHA_RANGE = (.25, .75)
         ZOOM_RANGE = (.25, .75)
-        LIFETIME_RANGE = (2.5, .5)
-        FADE_RANGE = (.9, .7) # Дипапзон резкости появления/затухания частицы
+        LIFETIME_RANGE = (2.5, .5)  # Сколько времени будет жить частица?
+        FADE_RANGE = (.9, .7)       # Дипапзон резкости появления/затухания частицы
         FADE_SKEW_RANGE = (-.2, .2) # Диапазон перекоса между появлением и затуханием частицы
 
         def __init__(self, part_img=None, parts_count=300, speed=(60.0, 120.0), outborders=10):
-            self.oldst = .0
-
             super(CustomParticles, self).__init__()
 
             self.part_img = renpy.displayable(part_img) 
@@ -25,11 +23,8 @@
             self.particles = [self.set_particle() for i in xrange(parts_count)]
 
         def set_particle(self, part_obj=None):
-            # Координата в пределах экрана, с границами
-            b, s = self.outborders, self.disp_size
-
             params = {
-                "pos": tuple(renpy.random.randint(-b, c+b) for c in s),
+                "pos": tuple(renpy.random.randint(-self.outborders, side+self.outborders) for side in self.disp_size),
                 "angle": renpy.random.uniform(0, pi * 2.0),
                 "speed": renpy.random.uniform(*self.speed),
                 "lifetime": renpy.random.uniform(*self.LIFETIME_RANGE),
@@ -50,9 +45,6 @@
             return (part.disp for part in self.particles)
 
         def render(self, w, h, st, at):
-            dt = st - self.oldst
-            self.oldst = st
-
             rv = renpy.Render(*self.disp_size)
             
             for part in self.particles:
@@ -116,7 +108,6 @@
                 return .0
 
             trans.alpha = self.alpha * self.__trap_interpolate(progress)
-            #trans.zoom = self.zoom * self.__trap_interpolate(progress)
 
             self.pos = (c + d * dt for c, d in zip(self.pos, self.direction))
             self.pos = tuple(wrap_around(c, s, self.__borders_offset) for c, s in zip(self.pos, self.__borders))
